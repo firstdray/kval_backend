@@ -7,6 +7,9 @@ const connect = {
     database: process.env.DB_NAME,
     password: process.env.DB_PASS,
     user: process.env.DB_USER,
+    ssl: {
+        rejectUnauthorized: false,
+    }
 }
 
 const PostgreDB = pg(connect);
