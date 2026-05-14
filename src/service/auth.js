@@ -12,7 +12,7 @@ async function createUser(createData) {
 
     const hashedPass = await bcrypt.hash(createData.pass, parseInt(process.env.SALT_ROUNDS));
 
-    return await PostgreDB.query(`INSERT INTO users (
+    const result = await PostgreDB.query(`INSERT INTO users (
         login,
         pass,
         fio,
@@ -20,6 +20,8 @@ async function createUser(createData) {
         email
     )
     VALUES ($1, $2, $3, $4, $5) RETURNING *`, [createData.login, hashedPass, createData.fio, createData.phone, createData.email]);
+
+    return result[0];
 }
 
 async function getUser(login, pass) {
